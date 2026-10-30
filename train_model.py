@@ -85,11 +85,11 @@ for col in cat_features:
         p, r, fb = performance_on_categorical_slice(
             test,
             col,
-            slive_value,
+            slicevalue,
             cat_features,
             "salary",
             encoder,
-            1b,
+            lb,
             model
         )
         with open("slice_output.txt", "a") as f:

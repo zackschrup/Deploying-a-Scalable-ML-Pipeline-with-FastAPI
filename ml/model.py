@@ -67,7 +67,7 @@ def inference(model, X):
         Predictions from the model.
     """
     # TODO: implement the function
-    reds = model.predict(X)
+    preds = model.predict(X)
 
     return preds
 
@@ -85,7 +85,7 @@ def save_model(model, path):
     with open(path,"wb") as f:
         pickle.dump(model, f)
 
-    Print(f"Model saved to {path}")
+    print(f"Model saved to {path}")
 
 def load_model(path):
     """ Loads pickle file from `path` and returns it."""
@@ -134,31 +134,23 @@ def performance_on_categorical_slice(
     fbeta : float
 
     """
-    # TODO: implement the function
+
+    slice_df = data[data[column_name] == slice_value]
+
     X_slice, y_slice, _, _ = process_data(
-        # your code here
-        # for input data, use data in column given as "column_name", with the slice_value 
-        # use training = False
-
-        slice_df = data[data[column_name] == slive_value]
-
-        X_slice, y_slice, _, _ = process_data(
-            slice_df,
-            categorical_features = categorical_features,
-            label = label,
-            training = False,
-            encoder = encoder,
-            1b = 1b
-        )
-
-        preds = inference(model, X_slice)
-
-        precision, recall, fbeta = compute_model_metrics(
-            y_slice,
-            preds
-        )
-        return precision, recall, fbeta
+        slice_df,
+        categorical_features = categorical_features,
+        label = label,
+        training = False,
+        encoder = encoder,
+        lb = lb
     )
-    preds = None # your code here to get prediction on X_slice using the inference function
-    precision, recall, fbeta = compute_model_metrics(y_slice, preds)
+
+    preds = inference(model, X_slice)
+
+    precision, recall, fbeta = compute_model_metrics(
+        y_slice,
+        preds
+    )
     return precision, recall, fbeta
+
